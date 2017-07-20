@@ -5,9 +5,9 @@
 #   gem 'sqlite3'
 #
 default: &default
-  adapter: mysql2
-  encoding: utf8
-  username: root
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
   <<: *default
@@ -23,3 +23,5 @@ test:
 production:
   <<: *default
   database: chromecast_production
+  username: chromecast
+  password: <%= ENV['CHROMECAST_DATABASE_PASSWORD'] %>

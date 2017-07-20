@@ -12,6 +12,6 @@ class GamesController < ApplicationController
   private
 
   def new_game_questions
-    Question.where.not(id: @room.questions).order("RAND()").limit(10)
+    Question.where.not(id: @room.questions).order("random()").limit(10)
   end
 end
