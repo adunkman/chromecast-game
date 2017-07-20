@@ -15,6 +15,20 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "#update allows updating the game’s state" do
+    white_shadow = rooms(:white_shadow)
+    white_shadow_game = games(:white_shadow_game)
+    new_state = "question2"
+
+    assert_nil white_shadow_game.state
+
+    put game_path(name: white_shadow.name, id: white_shadow_game.id), params: {
+      state: new_state
+    }
+
+    assert new_state, white_shadow_game.reload.state
+  end
+
   test "#show retrieves a game" do
     white_shadow = rooms(:white_shadow)
     white_shadow_game = games(:white_shadow_game)

@@ -9,6 +9,12 @@ class GamesController < ApplicationController
     @game = Game.create!(room: @room, questions: new_game_questions)
   end
 
+  def update
+    @room = Room.find_by!(name: params.require(:name))
+    @game = Game.find_by!(room: @room, id: params.require(:id))
+    @game.update!(params.permit(:state))
+  end
+
   private
 
   def new_game_questions
