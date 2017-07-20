@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     resources :rooms, only: [:show, :create], param: :name do
       member do
         put "players/:client_id", to: "gaming_sessions#update", as: :player
-        resources :games, only: [:create]
+        resources :games, only: [:show, :create]
       end
     end
 

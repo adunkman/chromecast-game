@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170720022554) do
+ActiveRecord::Schema.define(version: 20170720175617) do
 
   create_table "games", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "room_id"
@@ -19,11 +19,19 @@ ActiveRecord::Schema.define(version: 20170720022554) do
     t.index ["room_id"], name: "index_games_on_room_id"
   end
 
+  create_table "games_questions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "game_id"
+    t.bigint "question_id"
+    t.index ["game_id"], name: "index_games_questions_on_game_id"
+    t.index ["question_id"], name: "index_games_questions_on_question_id"
+  end
+
   create_table "gaming_sessions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "room_id"
     t.bigint "player_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "score"
     t.index ["player_id"], name: "index_gaming_sessions_on_player_id"
     t.index ["room_id"], name: "index_gaming_sessions_on_room_id"
   end
@@ -31,6 +39,14 @@ ActiveRecord::Schema.define(version: 20170720022554) do
   create_table "players", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "client_id"
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "questions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "prompt"
+    t.string "answer"
+    t.text "explanation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
