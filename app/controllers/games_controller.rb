@@ -2,6 +2,11 @@ class GamesController < ApplicationController
   def show
     @room = Room.find_by!(name: params.require(:name))
     @game = Game.find_by!(room: @room, id: params.require(:id))
+
+    respond_to do |format|
+      format.html { render "application/index" }
+      format.json
+    end
   end
 
   def create

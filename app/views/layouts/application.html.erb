@@ -2,13 +2,10 @@
 <html>
   <head>
     <title>ChromecastApi</title>
-    <%= csrf_meta_tags %>
-
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag :application %>
+    <%= javascript_include_tag :application %>
   </head>
-
-  <body>
+  <body data-websocket-url="<%= websocket_connect_url %>">
     <%= yield %>
   </body>
 </html>

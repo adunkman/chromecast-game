@@ -1,0 +1,10 @@
+development:
+  is_secure: false
+  host: localhost:3000
+
+test:
+  host:
+
+production:
+  is_secure: true
+  host: chromecast-0043.herokuapp.com

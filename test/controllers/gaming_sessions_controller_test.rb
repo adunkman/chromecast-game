@@ -5,7 +5,7 @@ class GamingSessionsControllerTest < ActionDispatch::IntegrationTest
     ivy = players(:ivy)
     white_shadow = rooms(:white_shadow)
 
-    put player_room_path(client_id: ivy.client_id, name: white_shadow.name)
+    put player_room_path(client_id: ivy.client_id, name: white_shadow.name, format: :json)
 
     assert_response :success
   end
@@ -14,15 +14,18 @@ class GamingSessionsControllerTest < ActionDispatch::IntegrationTest
     ivy = players(:ivy)
 
     assert_raises ActiveRecord::RecordNotFound do
-      put player_room_path(client_id: ivy.client_id, name: "not-a-room-name")
+      put player_room_path(client_id: ivy.client_id, name: "not-a-room-name", format: :json)
     end
   end
 
-  test "#update requires a valid player" do
+  test "#update creates a player if it doesn’t exist" do
     white_shadow = rooms(:white_shadow)
+    client_id = "cc3a8fdc-5659-44b5-8adf-a2919e811904"
 
-    assert_raises ActiveRecord::RecordNotFound do
-      put player_room_path(client_id: "cc3a8fdc-5659-44b5-8adf-a2919e811904", name: white_shadow.name)
-    end
+    refute Player.exists?(client_id: client_id)
+
+    put player_room_path(client_id: client_id, name: white_shadow.name, format: :json)
+
+    assert Player.exists?(client_id: client_id)
   end
 end

@@ -4,14 +4,14 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
   test "#create starts a new game in a room" do
     white_shadow = rooms(:white_shadow)
 
-    post games_path(name: white_shadow.name)
+    post games_path(name: white_shadow.name, format: :json)
 
     assert_response :success
   end
 
   test "#create requires a valid room" do
     assert_raises ActiveRecord::RecordNotFound do
-      post games_path(name: "non-existent")
+      post games_path(name: "non-existent", format: :json)
     end
   end
 
@@ -22,7 +22,7 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
 
     assert_nil white_shadow_game.state
 
-    put game_path(name: white_shadow.name, id: white_shadow_game.id), params: {
+    put game_path(name: white_shadow.name, id: white_shadow_game.id, format: :json), params: {
       state: new_state
     }
 
@@ -33,7 +33,7 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
     white_shadow = rooms(:white_shadow)
     white_shadow_game = games(:white_shadow_game)
 
-    get game_path(name: white_shadow.name, id: white_shadow_game.id)
+    get game_path(name: white_shadow.name, id: white_shadow_game.id, format: :json)
 
     assert_response :success
   end
@@ -43,7 +43,7 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
     white_shadow_game = games(:white_shadow_game)
 
     assert_raises ActiveRecord::RecordNotFound do
-      get game_path(name: white_shadow.name, id: white_shadow_game.id + 1)
+      get game_path(name: white_shadow.name, id: white_shadow_game.id + 1, format: :json)
     end
   end
 
@@ -51,7 +51,7 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
     white_shadow_game = games(:white_shadow_game)
 
     assert_raises ActiveRecord::RecordNotFound do
-      get game_path(name: "non-existent", id: white_shadow_game.id)
+      get game_path(name: "non-existent", id: white_shadow_game.id, format: :json)
     end
   end
 
@@ -60,7 +60,7 @@ class GamesControllerTest < ActionDispatch::IntegrationTest
     white_shadow_game = games(:white_shadow_game)
 
     assert_raises ActiveRecord::RecordNotFound do
-      get game_path(name: twilight_hill.name, id: white_shadow_game.id)
+      get game_path(name: twilight_hill.name, id: white_shadow_game.id, format: :json)
     end
   end
 end

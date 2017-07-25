@@ -3,21 +3,21 @@ require 'test_helper'
 class RoomsControllerTest < ActionDispatch::IntegrationTest
   test "#show with non-existent name returns 404" do
     assert_raise ActiveRecord::RecordNotFound do
-      get room_path(name: "non-existent")
+      get room_path(name: "non-existent", format: :json)
     end
   end
 
   test "#show with valid name returns 200" do
     white_shadow = rooms(:white_shadow)
 
-    get room_path(name: white_shadow.name)
+    get room_path(name: white_shadow.name, format: :json)
 
     assert_response :success
     assert_equal white_shadow.name, response_json[:name]
   end
 
   test "#create returns a new room with a unique name" do
-    post rooms_path
+    post rooms_path(format: :json)
 
     assert_response :success
     assert response_json[:name]
