@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
 
   private
 
+  helper_method :chromecast?
   def chromecast?
     request.headers["User-Agent"] =~ /CrKey/
   end

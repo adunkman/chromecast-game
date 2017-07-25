@@ -3,9 +3,18 @@
   <head>
     <title>ChromecastApi</title>
     <%= stylesheet_link_tag :application %>
+
+    <% if chromecast? %>
+      <script src="https://www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
+    <% end %>
+
     <%= javascript_include_tag :application %>
+
+    <% unless chromecast? %>
+      <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>
+    <% end %>
   </head>
-  <body data-websocket-url="<%= websocket_connect_url %>">
+  <body class="<%= chromecast? ? "is-chromecast" : "is-controller" %>" data-websocket-url="<%= websocket_connect_url %>">
     <%= yield %>
   </body>
 </html>

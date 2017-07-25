@@ -16,6 +16,25 @@ module.exports = Backbone.Router.extend({
   initialize: function ({ws, client_id}) {
     this.ws = ws
     this.client_id = client_id
+
+    this.initialize_cast_api()
+  },
+
+  initialize_cast_api: function () {
+    if (this.is_chromecast()) {
+      cast.receiver.logger.setLevelValue(cast.receiver.LoggerLevel.DEBUG)
+      this.cast_receiver_manager = cast.receiver.CastReceiverManager.getInstance()
+      this.cast_receiver_manager.start()
+    }
+    else {
+      window.__onGCastApiAvailable = (is_available) => {
+        this.cast_context = cast.framework.CastContext.getInstance()
+        this.cast_context.setOptions({
+          receiverApplicationId: "596B5B39",
+          autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
+        })
+      }
+    }
   },
 
   lobby: function () {
