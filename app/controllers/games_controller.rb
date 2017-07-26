@@ -1,10 +1,14 @@
 class GamesController < ApplicationController
+  include NotificationConcern
+
+  after_action :notify_room_of_games, only: :create
+
   def show
     @room = Room.find_by!(name: params.require(:name))
     @game = Game.find_by!(room: @room, id: params.require(:id))
 
     respond_to do |format|
-      format.html { render "application/index" }
+      format.html { render "bootstrap/index" }
       format.json
     end
   end

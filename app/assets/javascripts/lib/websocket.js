@@ -1,18 +1,10 @@
-const ReconnectingWebsocket = require("reconnectingwebsocket")
+const Nes = require("nes/client")
 const Backbone = require("backbone")
 const _ = require("underscore")
 
-module.exports = class Websocket {
+module.exports = class Websocket extends Nes.Client {
   constructor(endpoint) {
-    _.extend(this, Backbone.Events)
-
-    const ws = new ReconnectingWebsocket(endpoint)
-
-    ws.addEventListener("open", () => this.trigger("open"))
-    ws.addEventListener("close", () => this.trigger("close"))
-    ws.addEventListener("message", ({data}) => {
-      const message = JSON.parse(data)
-      this.trigger(`message:${message.type}`, message.data)
-    })
+    super(endpoint)
+    this.connect((err) => {})
   }
 }

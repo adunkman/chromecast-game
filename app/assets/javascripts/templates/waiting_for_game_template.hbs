@@ -1,0 +1,19 @@
+<h1>Howdy!</h1>
+
+<p>Waiting for other players to join…</p>
+
+<p>Current game members:</p>
+
+<ul>
+  {{#each players}}
+    <li>
+      {{#if name}}{{name}}{{else}}(Player is entering name){{/if}}{{#if is_you}} (you){{/if}}
+    </li>
+  {{/each}}
+</ul>
+
+<div class="js-form-error"></div>
+
+<button type="button" class="js-start-game">
+  Start Game!
+</button>

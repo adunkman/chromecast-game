@@ -4,3 +4,15 @@
   <li>Visit {{origin}} on your device.</li>
   <li>Enter room name: <strong>{{room_name}}</strong>.</li>
 </ol>
+
+{{#if player_count}}
+  <p>Players ({{player_count}}):</p>
+
+  <ul>
+    {{#each players}}
+      <li>
+        {{#if name}}{{name}}{{else}}(Player is entering name){{/if}}
+      </li>
+    {{/each}}
+  </ul>
+{{/if}}

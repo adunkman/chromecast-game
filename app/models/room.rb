@@ -3,6 +3,7 @@ class Room < ApplicationRecord
     presence: true,
     uniqueness: { case_sensitive: false }
 
+  has_many :gaming_sessions
   has_many :players, through: :gaming_sessions
   has_many :games
   has_many :games_questions, through: :games
