@@ -51,6 +51,7 @@ module.exports = Backbone.Router.extend({
 
   room_lobby: function (room_name) {
     const players = new PlayersCollection({room_name})
+    const games = new GamesCollection({room_name})
     var view
 
     if (this.is_chromecast()) {
