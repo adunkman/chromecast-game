@@ -10,7 +10,7 @@ class PlayersController < ApplicationController
   def show
     @player = Player.includes(:rooms).find_by!({
       rooms: {name: params.require(:name)},
-      client_id: "55182e8c-f4c1-4919-9495-343e437542c4"
+      client_id: params.require(:client_id)
     })
 
     render "bootstrap/index"

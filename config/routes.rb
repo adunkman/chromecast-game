@@ -6,7 +6,11 @@ Rails.application.routes.draw do
       put "players/:client_id", to: "gaming_sessions#update", as: :player
       get "players/:client_id", to: "players#show"
       resources :players, only: [:index]
-      resources :games, only: [:show, :create, :update]
+      resources :games do
+        member do
+          resources :answers, only: [:create]
+        end
+      end
     end
   end
 
