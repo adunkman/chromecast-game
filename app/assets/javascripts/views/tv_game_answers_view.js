@@ -1,4 +1,5 @@
 const _ = require("underscore")
+const md5 = require("md5")
 const Backbone = require("backbone")
 
 module.exports = Backbone.View.extend({
@@ -20,7 +21,7 @@ module.exports = Backbone.View.extend({
 
     return {
       prompt_html: question.prompt.replace("_", "<span class=\"blank\"></span>"),
-      answers: _.shuffle(answers),
+      answers: answers.sort((a, b) => md5(a) < md5(b) ? 1 : -1),
       countdown: this.countdown,
       s: this.countdown === 1 ? "" : "s"
     }

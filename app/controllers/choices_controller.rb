@@ -1,4 +1,4 @@
-class AnswersController < ApplicationController
+class ChoicesController < ApplicationController
   include NotificationConcern
 
   after_action :notify_room_of_games, only: [:create]
@@ -12,12 +12,24 @@ class AnswersController < ApplicationController
       client_id: params.require(:client_id)
     })
 
-    @answer = Answer.find_or_create_by!(
+    answer_id = params.require(:answer_id)
+
+    if answer_id != "correct"
+      @chosen_answer_player = Player.includes(:rooms).find_by!({
+        rooms: {name: @room.name},
+        client_id: answer_id
+      })
+    end
+
+    @choice = Choice.find_or_create_by!({
       game: @game,
       question: @question,
       gaming_session: GamingSession.find_by!(room: @room, player: @player)
-    )
+    })
 
-    @answer.update!(answer: params.require(:answer))
+    @choice.update!(
+      is_correct: answer_id == "correct",
+      chosen_player_id: @chosen_answer_player.try(:id)
+    )
   end
 end

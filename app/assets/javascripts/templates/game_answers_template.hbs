@@ -1,0 +1,13 @@
+{{#if submitted}}
+  <h1>Your answer has been saved! Waiting for other players…</h1>
+{{else}}
+  <h1>{{{prompt_html}}}</h1>
+
+  <p>Pick the correct answer:</p>
+
+  <div class="js-form-error"></div>
+
+  {{#each answers}}
+    <button type="button" class="js-answer" data-answer-id="{{#if correct}}correct{{else}}{{client_id}}{{/if}}">{{answer}}</li>
+  {{/each}}
+{{/if}}

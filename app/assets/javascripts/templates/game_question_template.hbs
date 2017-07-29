@@ -1,0 +1,12 @@
+{{#if submitted}}
+  <h1>Your answer has been saved! Waiting for other players…</h1>
+{{else}}
+  <h1>{{{prompt_html}}}</h1>
+
+  <div class="js-form-error"></div>
+
+  <form>
+    <input type="text" placeholder="Your answer" required>
+    <button>Send Answer</button>
+  </form>
+{{/if}}

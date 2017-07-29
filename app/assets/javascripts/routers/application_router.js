@@ -126,20 +126,15 @@ module.exports = Backbone.Router.extend({
 
     if (this.is_chromecast()) {
       this.set_view_and_unsubscribe(new TvGameView({
-        router: this,
         room_name: room_name,
-        client_id: this.client_id,
         players: players,
         model: game
       }))
     }
     else {
       this.set_view_and_unsubscribe(new GameView({
-        router: this,
-        room_name: room_name,
-        client_id: this.client_id,
-        players: players,
-        model: game
+        model: game,
+        client_id: this.client_id
       }))
     }
 

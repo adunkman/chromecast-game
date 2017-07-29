@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170728224122) do
+ActiveRecord::Schema.define(version: 20170729150424) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,17 @@ ActiveRecord::Schema.define(version: 20170728224122) do
     t.index ["game_id"], name: "index_answers_on_game_id"
     t.index ["gaming_session_id"], name: "index_answers_on_gaming_session_id"
     t.index ["question_id"], name: "index_answers_on_question_id"
+  end
+
+  create_table "choices", force: :cascade do |t|
+    t.bigint "game_id"
+    t.bigint "question_id"
+    t.bigint "gaming_session_id"
+    t.boolean "is_correct"
+    t.integer "chosen_player_id"
+    t.index ["game_id"], name: "index_choices_on_game_id"
+    t.index ["gaming_session_id"], name: "index_choices_on_gaming_session_id"
+    t.index ["question_id"], name: "index_choices_on_question_id"
   end
 
   create_table "games", force: :cascade do |t|

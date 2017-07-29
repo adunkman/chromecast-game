@@ -4,7 +4,9 @@ module.exports = Backbone.View.extend({
   template: require("../templates/tv_game_score_template"),
   countdown: 15,
 
-  initialize: function () {
+  initialize: function ({players}) {
+    this.players = players
+
     this.interval = setInterval(this.count_down.bind(this), 1000)
   },
 
@@ -15,13 +17,21 @@ module.exports = Backbone.View.extend({
   render_attrs: function () {
     const question_index = this.model.state_param()
     const question = this.model.get("questions")[question_index]
+    const scores = this.model.score()
+    const players_with_scores = this.players.map((p) => {
+      return {
+        name: p.get("name"),
+        score: scores[p.get("client_id")] || 0
+      }
+    }).sort((a, b) => a.score > b.score ? 1 : -1)
 
     return {
       prompt_html: question.prompt.replace("_", `<strong>${question.answer}</strong>`),
       explanation: question.explanation,
       countdown: this.countdown,
       s: this.countdown === 1 ? "" : "s",
-      has_next_question: +this.model.state_param() < 9
+      has_next_question: +this.model.state_param() < 9,
+      players_with_scores: players_with_scores
     }
   },
 

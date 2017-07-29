@@ -5,7 +5,10 @@ module NotificationConcern
     def notify_room_of_games
       HTTParty.post("#{websocket_endpoint}/rooms/#{@room.name}", {
         headers: { "Content-Type": "application/json" },
-        body: { type: :games, data: @room.games }.to_json
+        body: {
+          type: :games,
+          data: JSON.parse(render_to_string("games/index"))
+        }.to_json
       })
     end
 

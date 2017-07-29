@@ -25,5 +25,26 @@ module.exports = Backbone.Model.extend({
   state_param: function () {
     const s = this.get("state")
     return s ? s.split(":")[1] : s
+  },
+
+  score: function () {
+    const scores = {}
+
+    this.get("questions").forEach((q) => {
+      q.choices.forEach((c) => {
+        var client_id_to_increment
+        if (c.is_correct) {
+          client_id_to_increment = c.client_id
+        }
+        else {
+          client_id_to_increment = c.chosen_client_id
+        }
+
+        scores[client_id_to_increment] = scores[client_id_to_increment] || 0
+        scores[client_id_to_increment]++
+      })
+    })
+
+    return scores
   }
 })
