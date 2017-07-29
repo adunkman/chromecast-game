@@ -43,6 +43,6 @@ module.exports = Backbone.View.extend({
   },
 
   create_completed_view: function () {
-    return new TvGameCompletedView({model: this.model})
+    return new TvGameCompletedView({model: this.model, players: this.players})
   }
 })

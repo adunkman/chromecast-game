@@ -1,13 +1,14 @@
-<h1>{{{prompt_html}}}</h1>
-
+<p class="slight-zoom">{{{prompt_html}}}</p>
 <p>{{explanation}}</p>
 
-<ul>
+<ul class="player-list">
   {{#each players_with_scores}}
-    <li>{{name}}: {{score}}</li>
+    <li>{{name}}<br><strong>{{score}}</strong></li>
   {{/each}}
 </ul>
 
 {{#if has_next_question}}
   <p>Next question in {{countdown}} second{{s}}…</p>
+{{else}}
+  <p>Game over in {{countdown}} second{{s}}…</p>
 {{/if}}

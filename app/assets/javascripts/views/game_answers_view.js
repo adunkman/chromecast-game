@@ -3,8 +3,10 @@ const md5 = require("md5")
 const Backbone = require("backbone")
 
 module.exports = Backbone.View.extend({
+  className: "game-answers",
   template: require("../templates/game_answers_template"),
   submitted: false,
+  emoji: ["😬", "👀", "👻", "🐛", "🐶", "🌏"],
 
   events: {
     "click .js-answer": "submit_response"
@@ -30,7 +32,8 @@ module.exports = Backbone.View.extend({
     return {
       prompt_html: question.prompt.replace("_", "<span class=\"blank\"></span>"),
       answers: answers.sort((a, b) => md5(a.answer) < md5(b.answer) ? 1 : -1),
-      submitted: this.submitted
+      submitted: this.submitted,
+      random_emoji: this.emoji[Math.floor(Math.random() * this.emoji.length)]
     }
   },
 

@@ -1,1 +1,9 @@
-<h1>Done!</h1>
+<p class="zoom">Final scores:</p>
+
+<ul class="player-list slight-zoom">
+  {{#each players_with_scores}}
+    <li>{{name}}<br><strong>{{score}}</strong></li>
+  {{/each}}
+</ul>
+
+<p>Select “New Game” on your device to play again!</p>

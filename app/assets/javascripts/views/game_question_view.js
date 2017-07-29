@@ -2,8 +2,10 @@ const $ = require("jquery")
 const Backbone = require("backbone")
 
 module.exports = Backbone.View.extend({
+  className: "game-question",
   template: require("../templates/game_question_template"),
   submitted: false,
+  emoji: ["🤞", "😉", "🙊", "😎", "😺", "💅"],
 
   events: {
     "submit": "submit_answer"
@@ -23,7 +25,8 @@ module.exports = Backbone.View.extend({
 
     return {
       prompt_html: question.prompt.replace("_", "<span class=\"blank\"></span>"),
-      submitted: this.submitted
+      submitted: this.submitted,
+      random_emoji: this.emoji[Math.floor(Math.random() * this.emoji.length)]
     }
   },
 

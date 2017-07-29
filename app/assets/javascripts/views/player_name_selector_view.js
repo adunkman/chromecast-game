@@ -2,6 +2,7 @@ const $ = require("jquery")
 const Backbone = require("backbone")
 
 module.exports = Backbone.View.extend({
+  className: "player-name-selector",
   template: require("../templates/player_name_selector_template"),
 
   events: {

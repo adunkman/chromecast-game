@@ -2,7 +2,7 @@ const Backbone = require("backbone")
 
 module.exports = Backbone.View.extend({
   template: require("../templates/tv_game_question_template"),
-  countdown: 15,
+  countdown: 25,
 
   initialize: function () {
     this.interval = setInterval(this.count_down.bind(this), 1000)

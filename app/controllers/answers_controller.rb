@@ -18,6 +18,6 @@ class AnswersController < ApplicationController
       gaming_session: GamingSession.find_by!(room: @room, player: @player)
     )
 
-    @answer.update!(answer: params.require(:answer))
+    @answer.update!(answer: params.require(:answer).downcase)
   end
 end

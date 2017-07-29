@@ -1,13 +1,22 @@
 {{#if submitted}}
-  <h1>Your answer has been saved! Waiting for other players…</h1>
+  <header>
+    <h1>Good Job!</h1>
+  </header>
+  <section>
+    <p>Your answer has been saved! Waiting for other players…</p>
+
+    <p class="emoji">{{random_emoji}}</p>
+  </section>
 {{else}}
-  <h1>{{{prompt_html}}}</h1>
+  <section>
+    <p>{{{prompt_html}}}</p>
 
-  <p>Pick the correct answer:</p>
+    <p>Pick the correct answer:</p>
 
-  <div class="js-form-error"></div>
+    <div class="js-form-error"></div>
 
-  {{#each answers}}
-    <button type="button" class="js-answer" data-answer-id="{{#if correct}}correct{{else}}{{client_id}}{{/if}}">{{answer}}</li>
-  {{/each}}
+    {{#each answers}}
+      <button type="button" class="js-answer big-button" data-answer-id="{{#if correct}}correct{{else}}{{client_id}}{{/if}}">{{answer}}</button>
+    {{/each}}
+  </section>
 {{/if}}

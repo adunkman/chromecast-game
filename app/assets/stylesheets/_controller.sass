@@ -1,0 +1,89 @@
+html.is-controller
+  -moz-osx-font-smoothing: grayscale
+  -webkit-font-smoothing: antialiased
+  background: #fff
+  font-size: 15pt
+  height: 100%
+  text-align: center
+
+  body
+    margin: 0
+    min-height: 100%
+
+  p
+    margin: 20px 0
+
+  ol, ul
+    margin: 20px 0
+    padding-left: 30px
+    li
+      margin: 10px 0
+
+  input, button
+    -moz-appearance: none
+    -webkit-appearance: none
+    appearance: none
+    background: #fff
+    border-radius: 3px
+    border: 1px solid #000
+    color: #000
+    display: inline-block
+    font-family: "noway"
+    font-size: inherit
+    margin-bottom: 20px
+    vertical-align: middle
+    &:focus
+      box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.1)
+      outline: none
+
+  input
+    padding: 10px
+    width: 100%
+
+  button
+    cursor: pointer
+    font-weight: bold
+    margin-top: 20px
+    padding: 8px 30px
+    white-space: nowrap
+
+  %container
+    margin: 0 auto
+    max-width: 600px
+    padding: 20px
+    > *:first-child
+      margin-top: 0
+    > *:last-child
+      margin-bottom: 0
+
+  header
+    background-color: #000
+    color: #fff
+    margin-bottom: 20px
+    h1
+      @extend %container
+  section
+    @extend %container
+
+  .waiting-for-game
+    text-align: left
+
+  .emoji
+    font-size: 5em
+
+  .game-question,
+  .game-answers
+    p.question
+      font-size: 1.3em
+      margin: 20px 0 40px
+
+    .blank
+      background-color: #000
+      border-bottom: 2px #000 solid
+      display: inline-block
+      height: 0
+      margin-right: 2px
+      width: 100px
+
+  .big-button
+    width: 100%

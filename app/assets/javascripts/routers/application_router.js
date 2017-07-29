@@ -134,7 +134,9 @@ module.exports = Backbone.Router.extend({
     else {
       this.set_view_and_unsubscribe(new GameView({
         model: game,
-        client_id: this.client_id
+        client_id: this.client_id,
+        players: players,
+        router: this.router
       }))
     }
 

@@ -1,7 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" class="<%= chromecast? ? "is-chromecast" : "is-controller" %>">
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>ChromecastApi</title>
+
     <%= stylesheet_link_tag :application %>
 
     <% if chromecast? %>
@@ -14,7 +18,7 @@
       <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>
     <% end %>
   </head>
-  <body class="<%= chromecast? ? "is-chromecast" : "is-controller" %>" data-websocket-url="<%= websocket_connect_url %>">
+  <body data-websocket-url="<%= websocket_connect_url %>">
     <%= yield %>
   </body>
 </html>

@@ -1,12 +1,21 @@
 {{#if submitted}}
-  <h1>Your answer has been saved! Waiting for other players…</h1>
+  <header>
+    <h1>Good Job!</h1>
+  </header>
+  <section>
+    <p>Your answer has been saved! Waiting for other players…</p>
+
+    <p class="emoji">{{random_emoji}}</p>
+  </section>
 {{else}}
-  <h1>{{{prompt_html}}}</h1>
+  <section>
+    <p class="question">{{{prompt_html}}}</p>
 
-  <div class="js-form-error"></div>
+    <div class="js-form-error"></div>
 
-  <form>
-    <input type="text" placeholder="Your answer" required>
-    <button>Send Answer</button>
-  </form>
+    <form>
+      <input type="text" placeholder="Enter your answer" autocomplete="off" autocorrect="off" autocapitalize="off" required>
+      <button>Send Answer</button>
+    </form>
+  </section>
 {{/if}}

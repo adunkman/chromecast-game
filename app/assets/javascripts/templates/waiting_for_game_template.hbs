@@ -1,19 +1,33 @@
-<h1>Howdy!</h1>
+<header>
+  <h1>How to Play</h1>
+</header>
 
-<p>Waiting for other players to join…</p>
+<section>
+  <p>You’ll use this device to answer ten questions.</p>
 
-<p>Current game members:</p>
+  <ol>
+    <li>We’ll ask you a question about the origin of a word.</li>
+    <li>You’ll type your answer here. Try to sound correct!</li>
+    <li>You’ll try to pick the right answer among those your friends answered.</li>
+  </ol>
 
-<ul>
-  {{#each players}}
-    <li>
-      {{#if name}}{{name}}{{else}}(Player is entering name){{/if}}{{#if is_you}} (you){{/if}}
-    </li>
-  {{/each}}
-</ul>
+  <p>You win a point when you pick the right answer, and a point for each time you trick a friend!</p>
 
-<div class="js-form-error"></div>
+  <p>Waiting for other players to join…</p>
 
-<button type="button" class="js-start-game">
-  Start Game!
-</button>
+  <ul>
+    {{#each players}}
+      <li>
+        {{#if name}}{{name}}{{else}}(Player is entering name){{/if}}{{#if is_you}} (you){{/if}}
+      </li>
+    {{/each}}
+  </ul>
+
+
+
+  <div class="js-form-error"></div>
+
+  <button type="button" class="js-start-game">
+    Start Game!
+  </button>
+</section>
