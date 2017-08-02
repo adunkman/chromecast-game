@@ -10,9 +10,8 @@ module.exports = Backbone.View.extend({
     "keyup input": "clear_validation_error_if_value_changed"
   },
 
-  initialize: function ({router, client_id}) {
+  initialize: function ({router}) {
     this.router = router
-    this.client_id = client_id
   },
 
   render: function () {
@@ -34,7 +33,7 @@ module.exports = Backbone.View.extend({
     return new Promise((resolve, reject) => {
       $.ajax({
         type: "put",
-        url: `/rooms/${encodeURIComponent(room_name)}/players/${encodeURIComponent(this.client_id)}`,
+        url: `/rooms/${encodeURIComponent(room_name)}/players`,
         dataType: "json",
         success: () => resolve(room_name),
         error: reject

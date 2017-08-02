@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
     cookies[:client_id] = client_id
   end
 
+  helper_method :client_id
   def client_id
     cookies[:client_id] || SecureRandom.uuid
   end

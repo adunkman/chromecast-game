@@ -12,18 +12,15 @@ module.exports = Backbone.View.extend({
     "click .js-answer": "submit_response"
   },
 
-  initialize: function ({client_id}) {
-    this.client_id = client_id
-  },
-
   render: function () {
     this.$el.html(this.template(this.render_attrs()))
   },
 
   render_attrs: function () {
+    const client_id = $("body").data("client-id")
     const question_index = this.model.state_param()
     const question = this.model.get("questions")[question_index]
-    const other_answers = question.answers.filter((a) => a.client_id !== this.client_id)
+    const other_answers = question.answers.filter((a) => a.client_id !== client_id)
     const answers = [{
       answer: question.answer,
       correct: true
@@ -45,7 +42,7 @@ module.exports = Backbone.View.extend({
     $.ajax({
       type: "post",
       url: `/games/${encodeURIComponent(this.model.id)}/questions/${encodeURIComponent(question.id)}/choices`,
-      data: { client_id: this.client_id, answer_id: answer_id },
+      data: { answer_id: answer_id },
       dataType: "json",
       success: this.answer_submitted.bind(this),
       error: this.show_error.bind(this)

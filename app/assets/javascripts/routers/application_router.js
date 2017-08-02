@@ -16,13 +16,12 @@ module.exports = Backbone.Router.extend({
   routes: {
     "(/)": "lobby",
     "rooms/:room_name(/)": "room_lobby",
-    "rooms/:room_name/players/:client_id(/)": "waiting_for_game",
+    "rooms/:room_name/players(/)": "waiting_for_game",
     "rooms/:room_name/games/:game_id(/)": "game"
   },
 
-  initialize: function ({ws, client_id}) {
+  initialize: function ({ws}) {
     this.ws = ws
-    this.client_id = client_id
 
     this.initialize_cast_api()
   },
@@ -46,8 +45,7 @@ module.exports = Backbone.Router.extend({
 
   lobby: function () {
     this.set_view_and_unsubscribe(new RoomSelectorView({
-      router: this,
-      client_id: this.client_id
+      router: this
     }))
   },
 
@@ -68,7 +66,6 @@ module.exports = Backbone.Router.extend({
       view = new PlayerNameSelectorView({
         router: this,
         room_name: room_name,
-        client_id: this.client_id,
         collection: players
       })
     }
@@ -90,14 +87,13 @@ module.exports = Backbone.Router.extend({
     })
   },
 
-  waiting_for_game: function (room_name, client_id) {
+  waiting_for_game: function (room_name) {
     const players = new PlayersCollection([], {room_name})
     const games = new GamesCollection([], {room_name})
 
     this.set_view_and_unsubscribe(new WaitingForGameView({
       router: this,
       room_name: room_name,
-      client_id: this.client_id,
       players: players,
       games: games,
     }))
@@ -134,7 +130,6 @@ module.exports = Backbone.Router.extend({
     else {
       this.set_view_and_unsubscribe(new GameView({
         model: game,
-        client_id: this.client_id,
         players: players,
         router: this.router
       }))

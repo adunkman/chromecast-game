@@ -7,8 +7,7 @@ const GameScoreView = require("./game_score_view")
 const GameCompletedView = require("./game_completed_view")
 
 module.exports = Backbone.View.extend({
-  initialize: function ({client_id, players, router}) {
-    this.client_id = client_id
+  initialize: function ({players, router}) {
     this.players = players
     this.router = router
 
@@ -32,11 +31,11 @@ module.exports = Backbone.View.extend({
   },
 
   create_show_question_view: function () {
-    return new GameQuestionView({model: this.model, client_id: this.client_id})
+    return new GameQuestionView({model: this.model})
   },
 
   create_show_answers_view: function () {
-    return new GameAnswersView({model: this.model, client_id: this.client_id})
+    return new GameAnswersView({model: this.model})
   },
 
   create_show_score_view: function () {

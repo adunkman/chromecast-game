@@ -9,10 +9,9 @@ module.exports = Backbone.View.extend({
     "submit": "save_player_name"
   },
 
-  initialize: function ({router, room_name, client_id}) {
+  initialize: function ({router, room_name}) {
     this.router = router
     this.room_name = room_name
-    this.client_id = client_id
   },
 
   render: function () {
@@ -37,7 +36,7 @@ module.exports = Backbone.View.extend({
     return new Promise((resolve, reject) => {
       $.ajax({
         type: "patch",
-        url: `/players/${encodeURIComponent(this.client_id)}`,
+        url: `/players`,
         data: {name},
         dataType: "json",
         success: resolve,
@@ -51,7 +50,7 @@ module.exports = Backbone.View.extend({
   },
 
   navigate_to_player_url: function () {
-    this.router.navigate(`/rooms/${encodeURIComponent(this.room_name)}/players/${this.client_id}`, {
+    this.router.navigate(`/rooms/${encodeURIComponent(this.room_name)}/players`, {
       trigger: true
     })
   }

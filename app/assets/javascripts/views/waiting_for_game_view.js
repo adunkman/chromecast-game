@@ -9,10 +9,9 @@ module.exports = Backbone.View.extend({
     "click .js-start-game": "start_game"
   },
 
-  initialize: function ({router, room_name, client_id, players, games}) {
+  initialize: function ({router, room_name, players, games}) {
     this.router = router
     this.room_name = room_name
-    this.client_id = client_id
     this.players = players
     this.games = games
 
@@ -22,6 +21,7 @@ module.exports = Backbone.View.extend({
 
   render: function () {
     const players = this.players.toJSON()
+    const client_id = $("body").data("client_id")
 
     players.forEach((p) => {
       p.is_you = p.client_id === this.client_id

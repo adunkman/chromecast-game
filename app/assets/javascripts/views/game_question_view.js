@@ -11,10 +11,6 @@ module.exports = Backbone.View.extend({
     "submit": "submit_answer"
   },
 
-  initialize: function ({client_id}) {
-    this.client_id = client_id
-  },
-
   render: function () {
     this.$el.html(this.template(this.render_attrs()))
   },
@@ -40,7 +36,7 @@ module.exports = Backbone.View.extend({
     $.ajax({
       type: "post",
       url: `/games/${encodeURIComponent(this.model.id)}/questions/${encodeURIComponent(question.id)}/answers`,
-      data: { client_id: this.client_id, answer: answer },
+      data: { answer: answer },
       dataType: "json",
       success: this.answer_submitted.bind(this),
       error: this.show_error.bind(this)

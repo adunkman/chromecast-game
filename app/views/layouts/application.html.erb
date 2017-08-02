@@ -18,7 +18,7 @@
       <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>
     <% end %>
   </head>
-  <body data-websocket-url="<%= websocket_connect_url %>">
+  <body data-websocket-url="<%= websocket_connect_url %>" data-client-id="<%= client_id %>">
     <%= yield %>
   </body>
 </html>
