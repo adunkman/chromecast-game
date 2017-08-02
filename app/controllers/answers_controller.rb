@@ -9,7 +9,7 @@ class AnswersController < ApplicationController
     @room = @game.room
     @player = Player.includes(:rooms).find_by!({
       rooms: {name: @room.name},
-      client_id: params.require(:client_id)
+      client_id: client_id
     })
 
     @answer = Answer.find_or_create_by!(

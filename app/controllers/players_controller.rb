@@ -10,14 +10,14 @@ class PlayersController < ApplicationController
   def show
     @player = Player.includes(:rooms).find_by!({
       rooms: {name: params.require(:name)},
-      client_id: params.require(:client_id)
+      client_id: client_id
     })
 
     render "bootstrap/index"
   end
 
   def update
-    @player = Player.find_or_create_by!(client_id: params.require(:client_id))
+    @player = Player.find_or_create_by!(client_id: client_id)
     @player.update!(params.permit(:name))
   end
 end

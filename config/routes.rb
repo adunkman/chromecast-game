@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :players, only: [:update], param: :client_id
+  patch "players", to: "players#update", as: :player
 
   post "games/:game_id/questions/:question_id/answers", to: "answers#create"
   post "games/:game_id/questions/:question_id/choices", to: "choices#create"
