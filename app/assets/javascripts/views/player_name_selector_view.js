@@ -25,23 +25,19 @@ module.exports = Backbone.View.extend({
     const name = this.$("input").val().trim()
 
     this.set_player_name(name)
-      .then((player) => {
-        this.collection.add(player)
-        this.navigate_to_player_url()
-      })
-      .catch(this.show_error.bind(this))
   },
 
   set_player_name: function (name) {
-    return new Promise((resolve, reject) => {
-      $.ajax({
-        type: "patch",
-        url: `/players/me`,
-        data: {name},
-        dataType: "json",
-        success: resolve,
-        error: reject
-      })
+    $.ajax({
+      type: "patch",
+      url: `/players/me`,
+      data: {name},
+      dataType: "json",
+      success: (player) => {
+        this.collection.add(player)
+        this.navigate_to_player_url()
+      },
+      error: (xhr) => this.show_error(xhr)
     })
   },
 

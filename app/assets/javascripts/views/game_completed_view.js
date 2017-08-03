@@ -39,21 +39,16 @@ module.exports = Backbone.View.extend({
 
   start_game: function () {
     this.$(".js-form-error").empty()
-
     this.create_game_in_room()
-      .then(this.navigate_to_game_url.bind(this))
-      .catch(this.show_error.bind(this))
   },
 
   create_game_in_room: function () {
-    return new Promise((resolve, reject) => {
-      $.ajax({
-        type: "post",
-        url: `/rooms/${encodeURIComponent(this.model.get("room_name"))}/games`,
-        dataType: "json",
-        success: resolve,
-        error: reject
-      })
+    $.ajax({
+      type: "post",
+      url: `/rooms/${encodeURIComponent(this.model.get("room_name"))}/games`,
+      dataType: "json",
+      success: (data) => this.navigate_to_game_url(data),
+      error: (xhr) => this.show_error(xhr)
     })
   },
 

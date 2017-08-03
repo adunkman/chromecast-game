@@ -25,27 +25,15 @@ module.exports = Backbone.View.extend({
     const room_name = this.$("input").val().toLowerCase().trim().replace(/\s/g, "-")
 
     this.join_room(room_name)
-      .then(this.navigate_to_room_url.bind(this))
-      .catch(this.show_error.bind(this))
   },
 
   join_room: function (room_name) {
-    return new Promise((resolve, reject) => {
-      $.ajax({
-        type: "put",
-        url: `/rooms/${encodeURIComponent(room_name)}/players/me`,
-        dataType: "json",
-        success: () => resolve(room_name),
-        error: (xhr) => {
-          if (xhr && xhr.status === undefined) {
-            // Weird iOS Chrome Polymer error
-            resolve(room_name)
-          }
-          else {
-            reject(xhr)
-          }
-        }
-      })
+    $.ajax({
+      type: "put",
+      url: `/rooms/${encodeURIComponent(room_name)}/players/me`,
+      dataType: "json",
+      success: () => this.navigate_to_room_url(room_name),
+      error: (xhr) => this.show_error(xhr)
     })
   },
 
