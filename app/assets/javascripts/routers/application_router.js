@@ -16,12 +16,14 @@ module.exports = Backbone.Router.extend({
   routes: {
     "(/)": "lobby",
     "rooms/:room_name(/)": "room_lobby",
-    "rooms/:room_name/players(/)": "waiting_for_game",
+    "rooms/:room_name/players/me(/)": "waiting_for_game",
     "rooms/:room_name/games/:game_id(/)": "game"
   },
 
   initialize: function ({ws}) {
     this.ws = ws
+    this.players = new PlayersCollection()
+    this.games = new GamesCollection()
 
     this.initialize_cast_api()
   },
@@ -50,23 +52,23 @@ module.exports = Backbone.Router.extend({
   },
 
   room_lobby: function (room_name) {
-    const players = new PlayersCollection([], {room_name})
-    const games = new GamesCollection([], {room_name})
+    this.players.room_name = room_name
+    this.games.room_name = room_name
     var view
 
     if (this.is_chromecast()) {
       view = new TvRoomView({
         router: this,
         room_name: room_name,
-        players: players,
-        games: games
+        players: this.players,
+        games: this.games
       })
     }
     else {
       view = new PlayerNameSelectorView({
         router: this,
         room_name: room_name,
-        collection: players
+        collection: this.players
       })
     }
 
@@ -75,62 +77,65 @@ module.exports = Backbone.Router.extend({
     this.ws.subscribe(`/rooms/${room_name}`, (message) => {
       switch (message.type) {
         case "players":
-          players.set(message.data)
+          this.players.set(message.data)
           break
         case "games":
-          games.set(message.data)
+          this.games.set(message.data)
           break
       }
     }, () => {
-      players.fetch()
-      games.fetch()
+      this.players.fetch()
+      this.games.fetch()
     })
   },
 
   waiting_for_game: function (room_name) {
-    const players = new PlayersCollection([], {room_name})
-    const games = new GamesCollection([], {room_name})
+    this.players.room_name = room_name
+    this.games.room_name = room_name
 
     this.set_view_and_unsubscribe(new WaitingForGameView({
       router: this,
       room_name: room_name,
-      players: players,
-      games: games,
+      players: this.players,
+      games: this.games,
     }))
 
     this.ws.subscribe(`/rooms/${room_name}`, (message) => {
       switch (message.type) {
         case "players":
-          players.set(message.data)
+          this.players.set(message.data)
           break
         case "games":
-          games.set(message.data)
+          this.games.set(message.data)
           break
       }
     }, () => {
-      players.fetch()
-      games.fetch()
+      this.players.fetch()
+      this.games.fetch()
     })
   },
 
   game: function (room_name, game_id) {
-    const players = new PlayersCollection([], {room_name})
-    const games = new GamesCollection([
-      {id: game_id, room_name}
-    ], {room_name})
-    const game = games.models[0]
+    this.players.room_name = room_name
+    this.games.room_name = room_name
+    var game
+
+    if (!(game = this.games.findWhere({id: +game_id}))) {
+      this.games.add({id: +game_id, room_name})
+      game = this.games.findWhere({id: +game_id})
+    }
 
     if (this.is_chromecast()) {
       this.set_view_and_unsubscribe(new TvGameView({
         room_name: room_name,
-        players: players,
+        players: this.players,
         model: game
       }))
     }
     else {
       this.set_view_and_unsubscribe(new GameView({
         model: game,
-        players: players,
+        players: this.players,
         router: this.router
       }))
     }
@@ -138,15 +143,15 @@ module.exports = Backbone.Router.extend({
     this.ws.subscribe(`/rooms/${room_name}`, (message) => {
       switch (message.type) {
         case "players":
-          players.set(message.data)
+          this.players.set(message.data)
           break
         case "games":
-          games.set(message.data)
+          this.games.set(message.data)
           break
       }
     }, () => {
-      players.fetch()
-      games.fetch()
+      this.players.fetch()
+      this.games.fetch()
     })
   },
 

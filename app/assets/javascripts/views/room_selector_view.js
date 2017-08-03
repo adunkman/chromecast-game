@@ -33,7 +33,7 @@ module.exports = Backbone.View.extend({
     return new Promise((resolve, reject) => {
       $.ajax({
         type: "put",
-        url: `/rooms/${encodeURIComponent(room_name)}/players`,
+        url: `/rooms/${encodeURIComponent(room_name)}/players/me`,
         dataType: "json",
         success: () => resolve(room_name),
         error: reject

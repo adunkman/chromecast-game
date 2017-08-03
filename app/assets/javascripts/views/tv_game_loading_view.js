@@ -18,6 +18,7 @@ module.exports = Backbone.View.extend({
   },
 
   render: function () {
+    this.start_countdown_if_loaded()
     this.$el.html(this.template(this.render_attrs()))
   },
 

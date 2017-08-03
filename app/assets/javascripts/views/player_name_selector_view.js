@@ -36,7 +36,7 @@ module.exports = Backbone.View.extend({
     return new Promise((resolve, reject) => {
       $.ajax({
         type: "patch",
-        url: `/players`,
+        url: `/players/me`,
         data: {name},
         dataType: "json",
         success: resolve,
@@ -50,7 +50,7 @@ module.exports = Backbone.View.extend({
   },
 
   navigate_to_player_url: function () {
-    this.router.navigate(`/rooms/${encodeURIComponent(this.room_name)}/players`, {
+    this.router.navigate(`/rooms/${encodeURIComponent(this.room_name)}/players/me`, {
       trigger: true
     })
   }
