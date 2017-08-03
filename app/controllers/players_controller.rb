@@ -8,7 +8,7 @@ class PlayersController < ApplicationController
   end
 
   def show
-    @player = Player.includes(:rooms).find_by!({
+    @player = Player.includes(:rooms).find_or_create_by!({
       rooms: {name: params.require(:name)},
       client_id: client_id
     })
