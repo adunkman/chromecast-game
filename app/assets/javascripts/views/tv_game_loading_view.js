@@ -45,5 +45,10 @@ module.exports = Backbone.View.extend({
     else {
       this.render()
     }
+  },
+
+  remove: function () {
+    clearInterval(this.interval)
+    Backbone.View.prototype.remove.apply(this, arguments)
   }
 })
