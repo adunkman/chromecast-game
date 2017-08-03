@@ -8,5 +8,7 @@ class GamingSessionsController < ApplicationController
     @player = Player.find_or_create_by!(client_id: client_id)
 
     GamingSession.find_or_create_by!(room: @room, player: @player)
+
+    render json: {}
   end
 end
