@@ -52,6 +52,7 @@ module.exports = Backbone.Router.extend({
   },
 
   room_lobby: function (room_name) {
+    $("body").append("<div>room_lobby load</div>")
     this.players.room_name = room_name
     this.games.room_name = room_name
     var view
@@ -65,14 +66,17 @@ module.exports = Backbone.Router.extend({
       })
     }
     else {
+      $("body").append("<div>room_lobby creating view</div>")
       view = new PlayerNameSelectorView({
         router: this,
         room_name: room_name,
         collection: this.players
       })
+      $("body").append("<div>room_lobby view created</div>")
     }
 
     this.set_view_and_unsubscribe(view)
+    $("body").append("<div>room_lobby view set</div>")
 
     this.ws.subscribe(`/rooms/${room_name}`, (message) => {
       switch (message.type) {
@@ -160,16 +164,23 @@ module.exports = Backbone.Router.extend({
   },
 
   set_view_and_unsubscribe: function (view) {
+    $("body").append("<div>set_view_and_unsubscribe started</div>")
     this.ws.subscriptions().forEach((p) => {
       this.ws.unsubscribe(p, null, () => {})
     })
+    $("body").append("<div>set_view_and_unsubscribe unsubscribed</div>")
 
     if (this.view) {
+      $("body").append("<div>set_view_and_unsubscribe view removing</div>")
       this.view.remove()
     }
+
+    $("body").append("<div>set_view_and_unsubscribe view rendering</div>")
 
     view.render()
     $("body").empty().append(view.el)
     this.view = view
+
+    $("body").append("<div>set_view_and_unsubscribe finished</div>")
   }
 })
