@@ -52,7 +52,7 @@ module.exports = Backbone.View.extend({
       this.show_input_error("This room doesn’t exist. Double-check your spelling?")
     }
     else {
-      this.$(".js-form-error").text("Something went wrong. Try again?")
+      this.$(".js-form-error").text("Something went wrong. Try again? " + xhr.status + JSON.stringify(arguments))
     }
   },
 
