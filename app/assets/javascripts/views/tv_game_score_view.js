@@ -54,8 +54,8 @@ module.exports = Backbone.View.extend({
     }
   },
 
-  remove: function () {
+  stopListening: function () {
     clearInterval(this.interval)
-    Backbone.View.prototype.remove.apply(this, arguments)
+    Backbone.View.prototype.stopListening.apply(this, arguments)
   }
 })

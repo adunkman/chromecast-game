@@ -19,7 +19,7 @@ module.exports = Backbone.View.extend({
     const view = this[`create_${state}_view`]()
 
     if (this.view) {
-      this.view.remove()
+      this.view.stopListening()
     }
     view.render()
     this.$el.html(view.el)
