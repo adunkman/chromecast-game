@@ -36,7 +36,15 @@ module.exports = Backbone.View.extend({
         url: `/rooms/${encodeURIComponent(room_name)}/players/me`,
         dataType: "json",
         success: () => resolve(room_name),
-        error: reject
+        error: (xhr) => {
+          if (xhr && xhr.status === undefined) {
+            // Weird iOS Chrome Polymer error
+            resolve(room_name)
+          }
+          else {
+            reject(xhr)
+          }
+        }
       })
     })
   },
@@ -52,7 +60,7 @@ module.exports = Backbone.View.extend({
       this.show_input_error("This room doesn’t exist. Double-check your spelling?")
     }
     else {
-      this.$(".js-form-error").text("Something went wrong. Try again? " + xhr.status + JSON.stringify(arguments))
+      this.$(".js-form-error").text("Something went wrong. Try again?")
     }
   },
 
