@@ -172,7 +172,7 @@ module.exports = Backbone.Router.extend({
 
     if (this.view) {
       $("body").append("<div>set_view_and_unsubscribe view removing</div>")
-      this.view.remove()
+      this.view.stopListening()
     }
 
     $("body").append("<div>set_view_and_unsubscribe view rendering</div>")
